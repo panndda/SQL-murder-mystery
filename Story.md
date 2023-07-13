@@ -171,7 +171,7 @@ This query is to check if the condition (g) above is satisfied, but the conditio
 
 
 ```sql
-Select *, (Select avg(annual_income)  From income) 
+Select *, round((Select avg(annual_income)  From income)) as average_income
 from income 
 Where ssn=961388910
 ```
@@ -218,7 +218,7 @@ This returns only 1 person_id (99716) which means the this suspect attended the 
 
 
 ```sql
-Select *, (Select avg(annual_income) From income) 
+Select *, (Select avg(annual_income) From income) as average_income
 From income 
 Where ssn in (961388910,337169072,987756388)
 ```

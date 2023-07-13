@@ -4,9 +4,9 @@ A crime has taken place and the detective needs your help. The detective gave yo
 
 Follow these steps to solve this challenge:
 
-*Download the sql-murder-mystery.db file [here](https://drive.google.com/drive/folders/1SLlSSzIqhu9m4p8HmoJYjn5X_GTYdDsf?usp=share_link)
-*Visit www.sqliteonline.com
-*Click on file, then open db and load in the database file you downloaded above
-*Write your SQL queries to see the different tables and the content
-*Use the Schema_Diagram to navigate the different tables.
-*Figure out who committed the crime with the details you remembered above.
+* Download the sql-murder-mystery.db file [here](https://drive.google.com/drive/folders/1SLlSSzIqhu9m4p8HmoJYjn5X_GTYdDsf?usp=share_link)
+* Visit www.sqliteonline.com
+* Click on file, then open db and load in the database file you downloaded above
+* Write your SQL queries to see the different tables and the content
+* Use the Schema_Diagram to navigate the different tables.
+* Figure out who committed the crime with the details you remembered above.

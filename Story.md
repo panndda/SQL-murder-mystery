@@ -53,10 +53,10 @@ The next point of call will be to use the information obtained from both witness
 * Only Gold members had those bags
 * He is a Male
 * He got into a Car with a plate that included "H42W"
-From the points above above, the killer is most probably a gym member.
+From the points above, the killer is most probably a gym member.
 
-# STEP 4: Finding the killer
-The first point of call at this stage was to check if Annabel was truly a member of the gym, the query to check this is;	
+## STEP 4: Finding the killer
+* The first point of call at this stage was to check if Annabel was truly a member of the gym, the query to check this is;	
 ```sql
 Select * 
 From get_fit_now_member 
@@ -66,6 +66,7 @@ Where person_id =16371;
 
 The above query returned with some data which confirmed that Annabel was truly a member of the gym with membership number “90081”
 
+* 
 * Now the next action is to check for the time when Annabel was at the gym on the 9th of January.
 ```sql
 Select *
@@ -74,8 +75,9 @@ Where check_in_date=20180109 and membership_id=90081;
 ```
 ![5](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/5.PNG)
 
-The above query affirmed that Annabel checked in at 16:00 and checked out at 17:00.
+The above query ad output affirmed that Annabel checked in at 16:00 and checked out at 17:00.
 
+* 
 * The next task is to get the list of people that were in the gym at the same time time with Annabel,
 ```sql
 Select *, case when check_in_time >= 1600 or check_out_time >= 1600 then 'in'
@@ -135,18 +137,21 @@ Select *
 From interview
 Where person_id=67318
 ```
-At this stage, the query returned the confession of one of the suspects with person_id (67318) where he said ```I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017. She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017.```
+At this stage, the query returned the confession of one of the suspects with person_id (67318) where he said;
+> I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017. She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017.
+
 ![10](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/10.PNG)
 
-# Step 8:
+## Step 8:
 Now, he has supplied us with information about person that sent him. They are;
-a.	Tesla
-b.	Model S
-c.	65” OR 67”
-d.	Red Hair
-e.	Female
-f.	Rich
-g.	Attended SQL Symphony 3 times in December in 2017
+1. Tesla
+2. Model S
+3. 65” OR 67”
+4. Red Hair
+5. Female
+6. Rich
+7. Attended SQL Symphony 3 times in December in 2017.
+  
 We are going to query the drivers_license table to get information about the suspect that sent Jeremy, the query below would do that
 ```sql
 SELECT * 
@@ -156,7 +161,7 @@ WHERE hair_color='red' and car_make='Tesla' AND gender='female'
 ```
 ![11](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/11.PNG)
 
-This returns a only a row of data, it satisfies conditions (a - e) above
+This returns a only a row of data, it satisfies criteria (1 - 5) above
 
 
 ```sql
@@ -164,42 +169,48 @@ Select *
 From person 
 Where license_id=918773
 ``` 
-(To get the person_id and ssn in order to query the events table and income table)
+The query above returns the person_id and ssn in order to query the events table and income table)
 This returns the person_id, name  and ssn of the suspect
+
 ![12](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/12.PNG)
 
 
+* 
+* The syntax below queries the facebook table to get info about the suspect's attendance
 ```sql
 SELECT * 
 FROM facebook_event_checkin 
 WHERE person_id=78881 AND event_name='SQL Symphony Concert' 
 Order by person_id
 ```
-This query is to check if the condition (g) above is satisfied, but the condition is not satisfied as the query returns a null table which means Red Korb with the person_id 78881 did not attend the SQL concert.
+This query is to check if the criteria (7) above is satisfied, but the criteria isn't satisfied as the query returns a null table which means Red Korb with the person_id 78881 did not attend the SQL concert.
+
 ![13](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/13.PNG)
 
-
+* AnnuAL Income
 ```sql
 Select *, round((Select avg(annual_income)  From income)) as average_income
 from income 
 Where ssn=961388910
 ```
+
 ![14](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/14.PNG)
 
-Then the condition  (f) was also satisfied as Red Korb was earning than the average salary range.
+Then the condition  (6) was also satisfied as Red Korb was earning than the average salary range.
 
 
-
-A further analysis was done to uncover the suspect that sent Jeremy as the condition (g) wasn't met, the condition (c) was modified to contain (65,66,67) as no one is expected to correctly ascertain a person’s height by just mere stare.
+## Step 9: Further Analysis
+A further analysis was done to uncover the suspect that sent Jeremy as the condition (7) wasn't met, the condition (3) was modified to contain (65,66,67) as no one is expected to correctly ascertain a person’s height by just mere stare.
 ```sql
 SELECT * 
 FROM drivers_license 
 WHERE hair_color='red' and car_make='Tesla' AND gender='female'
  and car_model='Model S' AND height IN (65,66,67)
 ```
+
 ![15](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/15.PNG)
 
-The above query returns 3 suspects as they all satisfy condition (a – e)
+The above query returns 3 suspects as they all satisfy criteria (1 - 5)
 
 
 ```sql
@@ -211,7 +222,7 @@ Where license_id=918773 or license_id=291182 or license_id=202298
 
 This returns the person_id, name and ssn of the suspects.
 
-
+* This query is used to check the attendance of each of suspects at the facebook event
 ```sql
 SELECT name,ssn,address_number ||' '||address_street_name,person_id, COUNT(*) as attendance 
 FROM facebook_event_checkin as f
@@ -221,9 +232,10 @@ WHERE person_id=78881 or person_id=90700 or person_id=99716 and event_name='SQL 
 GROUP by 1
 Order by person_id
 ```
+
 ![17](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/17.PNG)
 
-This returns only 1 person_id (99716) which means the this suspect attended the SQL concert 3 times (CONDITION g). The name of the suspect is Miranda Priestly of  1883 Golden Ave with ssn(987756388)
+This returns only 1 person_id (99716) which means the this suspect attended the SQL concert 3 times (CONDITION 7). The name of the suspect is Miranda Priestly of  1883 Golden Ave with ssn(987756388)
 
 
 ```sql
@@ -233,7 +245,7 @@ Where ssn in (961388910,337169072,987756388)
 ```
 ![18](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/18.PNG)
 
-Lastly, the last condition (f) was also satisfied by only 2 suspects(Miranda Priestly and Red Korb ) as they earn waayyy higher than the average. So only Miranda Priestly ticked all the boxes.
+Lastly, the last condition (6) was also satisfied by only 2 suspects(Miranda Priestly and Red Korb ) as they earn waayyy higher than the average. So only Miranda Priestly ticked all the boxes.
 
 # CONCLUSION
 Based on the analysis so far, it can concluded that the murderer is Jeremy Bowers with the id(67318) of 530 Washington Pl, Apt 3A with ssn(871539279).  Miranda Priestly of  1883 Golden Ave with person_id (99716) hired Jeremy to kill.

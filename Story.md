@@ -1,4 +1,5 @@
-The detective has provided with some information about the missing file, the goal at this stage is to retrieve the corresponding crime scene report from  the police department’s database.
+## STEP 1
+The goal at this stage is to retrieve the corresponding crime scene report from the police department’s database.
 To do this, a couple of queries were written to query the database in order to get the desired data from the crime_scene_report table which houses data about crimes.
 
 ```sql
@@ -8,12 +9,14 @@ Where type = 'murder' and date = 20180115 and city = 'SQL City';
 ```
 ![1](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/1.PNG)
 
-The above query returns the date of the murder, type of murder, city where it occurred and a brief description of the crime scene picked from a security footage. The security footage revealed that there were 2 witnesses at the scene; the first witness lives at the last house on "Northwestern Dr" while the second witness, named Annabel, lives somewhere on "Franklin Ave". ``` Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave". ```
+The above query returns the date of the murder, type of murder, city where it occurred and a brief description of the crime scene picked from a security footage. The security footage revealed that there were 2 witnesses at the scene; the first witness lives at the last house on "Northwestern Dr" while the second witness, named Annabel, lives somewhere on "Franklin Ave". 
+> Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave". >
+
 The next step will be to try to locate the two witnesses identified.
 
 
-# STEP 2
-With the little information about Annabel and the other witness, I would query the (person) table, the "person" table houses basic data (id, name, address and so on) about people. Below is the query written to get data from the table; 
+## STEP 2
+With the little information about Annabel and the other witness, I would query the "person" table, the "person" table houses basic data (id, name, address and so on) about people. Below is the query written to get data from the table; 
 ```sql
 SELECT * 
 FROM person
@@ -24,14 +27,20 @@ WHERE (name like '%Annabel%' and address_street_name ='Franklin Ave') or
 
 Annabel and Morty will be invited for an interview to get some info from them. 
 
-# STEP 3: 
-At the interview, Annabel said ``` I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th. ```
-Morty said ```I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W". ``` 
+## STEP 3: 
+At the interview, Annabel said;
+> I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th.
+
+Morty said;
+> I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".
+
 The query used to retrieve details about the interview session with Annabel and Morty; 
 ```sql
-Select * 
-From interview
-Where person_id in (14887,16371) 
+Select p.name,i.person_id, i.transcript
+From interview as i
+join person as p
+on i.person_id=p.id
+Where person_id in (14887,16371)  
 ```
 ![3a](https://github.com/panndda/SQL-murder-mystery/blob/main/New%20folder/3a.PNG)
 

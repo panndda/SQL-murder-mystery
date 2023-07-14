@@ -12,3 +12,5 @@ Follow these steps to solve this challenge:
 * Write your SQL queries to see the different tables and the content
 * Use the [Schema_Diagram](https://github.com/panndda/SQL-murder-mystery/blob/main/Database%20and%20Schema/schema.png) to navigate the different tables.
 * Figure out who committed the crime with the details you remembered above.
+
+Click here to [read](https://github.com/panndda/SQL-murder-mystery/blob/main/Detective%20SQL.md) through detailed analysis of how the mystery was solved

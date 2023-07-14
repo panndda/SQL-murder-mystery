@@ -7,7 +7,7 @@ Follow these steps to solve this challenge:
 
 * Download the sql-murder-mystery.db file [here](https://drive.google.com/drive/folders/1SLlSSzIqhu9m4p8HmoJYjn5X_GTYdDsf?usp=share_link)
 * Visit www.sqliteonline.com
-* Click on file, then open db and load in the database file you downloaded above
+* Click on file, then open db and load in the [database_file](https://github.com/panndda/SQL-murder-mystery/tree/main/Database%20and%20Schema) you downloaded above
 * Write your SQL queries to see the different tables and the content
-* Use the Schema_Diagram to navigate the different tables.
+* Use the [Schema_Diagram](https://github.com/panndda/SQL-murder-mystery/blob/main/Database%20and%20Schema/schema.png) to navigate the different tables.
 * Figure out who committed the crime with the details you remembered above.
